@@ -20,8 +20,19 @@ public class CatSelector : MonoBehaviour
         "Pet Your Cat (Demo)/Cats_Whole/4x/cat_53"
     };
 
+    private Image[] catButtonsImages; // Массив Image компонентов кнопок
+
     void Start()
     {
+        catButtonsImages = new Image[] {
+            cat1Button.GetComponent<Image>(),
+            cat2Button.GetComponent<Image>(),
+            cat3Button.GetComponent<Image>(),
+            cat4Button.GetComponent<Image>(),
+            cat5Button.GetComponent<Image>(),
+            cat6Button.GetComponent<Image>()
+        };
+
         cat1Button.onClick.AddListener(() => SelectCat(0));
         cat2Button.onClick.AddListener(() => SelectCat(1));
         cat3Button.onClick.AddListener(() => SelectCat(2));
@@ -36,6 +47,14 @@ public class CatSelector : MonoBehaviour
         if (index >= 0 && index < catImagePaths.Length)
         {
             catImage.sprite = Resources.Load<Sprite>(catImagePaths[index]);
+
+            // Устанавливаем прозрачность для всех кнопок
+            for (int i = 0; i < catButtonsImages.Length; i++)
+            {
+                Color color = catButtonsImages[i].color;
+                color.a = (i == index) ? 1f : 0.5f;
+                catButtonsImages[i].color = color;
+            }
         }
         else
         {
